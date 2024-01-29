@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "613694368545",
+    "project_id": "jitsicallpj",
+    "storage_bucket": "jitsicallpj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613694368545:android:ecfe415d62992b70d2ac60",
+        "android_client_info": {
+          "package_name": "com.jitsiproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6sPa8ZgnBWMdw1ys2XfBMTP5pLklRpzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
