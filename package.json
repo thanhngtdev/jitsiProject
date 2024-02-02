@@ -57,7 +57,8 @@
     "react-native-watch-connectivity": "1.1.0",
     "react-native-webrtc": "111.0.6",
     "react-native-webview": "13.5.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

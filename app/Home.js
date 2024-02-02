@@ -1,17 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {DeviceEventEmitter, Text, TouchableOpacity, View} from 'react-native';
 // import {collection, getDocs, query, where} from 'firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import CallKeep from 'react-native-callkeep';
+import NavigationService from './NavigationService';
 
 const HomeScreen = () => {
   const db = firestore();
 
   const [listGroup, setListGroup] = useState([]);
   const navigation = useNavigation();
-
+  React.useEffect(() => {
+    DeviceEventEmitter.emit('answerCall', NavigationService);
+  }, []);
   useEffect(() => {
     const usersCollection = firestore()
       .collection('group')
