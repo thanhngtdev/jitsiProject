@@ -1,26 +1,25 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback} from 'react';
 import {Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {backToTopAppStack} from '../App';
 
 const Login = () => {
-  const [text, onChangeText] = React.useState('Useless Text');
-  const [email, onEmail] = React.useState('');
-  const [password, onPassword] = React.useState('');
+  const [email, onEmail] = React.useState('user1@gmail.com');
+  const [password, onPassword] = React.useState('123456');
 
   const handleLogin = useCallback(() => {
-    // signInWithEmailAndPassword(auth, email, password)
-    //   .then(userCredential => {
-    //     // Signed in
-    //     const user = userCredential.user;
-    //     // ...
-    //     console.log('success', user);
-    //     navigate('/');
-    //   })
-    //   .catch(error => {
-    //     Alert.alert('Email hoặc mật khẩu không chính xác!');
-    //   })
-    //   .finally(() => {});
-  }, []);
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        if (userCredential) {
+          backToTopAppStack();
+        }
+      })
+      .catch(er => {
+        Alert.alert('Wrong');
+      });
+  }, [email, password]);
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Text style={{marginVertical: 16}}>Login Screen</Text>
@@ -30,7 +29,6 @@ const Login = () => {
         onChangeText={onEmail}
         value={email}
         placeholder="email"
-        // keyboardType="numeric"
       />
       <Text>password</Text>
       <TextInput
@@ -38,7 +36,6 @@ const Login = () => {
         onChangeText={onPassword}
         value={password}
         placeholder="password"
-        // keyboardType="numeric"
       />
       <Button title="login" onPress={handleLogin} />
     </View>

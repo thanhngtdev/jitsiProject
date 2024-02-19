@@ -1,15 +1,4 @@
-import {
-  CommonActions,
-  NavigationContainerRef,
-  NavigationState,
-  PartialState,
-  Route,
-  StackActions,
-} from '@react-navigation/native';
-import {
-  AppStackParamList,
-  AuthStackParamList,
-} from 'app/modules/navigation/AppParamsList';
+import {CommonActions, StackActions} from '@react-navigation/native';
 
 export default class NavigationService {
   static topLevelNavigator;

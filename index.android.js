@@ -1,18 +1,10 @@
-/**
- * @format
- */
-
-import {v4 as uuidv4} from 'uuid';
-import {AppRegistry, AppState, Linking} from 'react-native';
+import {AppRegistry} from 'react-native';
+import PushNotification from 'react-native-push-notification';
 import App from './App';
 import {name as appName} from './app.json';
-import PushNotification from 'react-native-push-notification';
-// import CallKeep from 'react-native-callkeep';
-// import NavigationService from './app/NavigationService';
-import CallKeep from 'react-native-callkeep';
 import {DeviceEventEmitter} from 'react-native';
+import CallKeep from 'react-native-callkeep';
 import NavigationService from './app/NavigationService';
-import {navigate} from './app/RootNavigation';
 
 CallKeep.registerPhoneAccount({
   ios: {
@@ -34,7 +26,6 @@ CallKeep.registerPhoneAccount({
 CallKeep.registerAndroidEvents();
 CallKeep.setAvailable(true);
 CallKeep.addEventListener('endCall', ({callUUID}) => {
-  // Do your normal `Hang Up` actions here
   console.log('End call', callUUID);
 });
 
@@ -44,18 +35,24 @@ PushNotification.configure({
   },
   // (required) Called when a remote is received or opened, or local notification is opened
   onNotification: notification => {
+    const dataRaw = JSON.parse(notification?.message);
     CallKeep.addEventListener('answerCall', async event => {
       CallKeep.backToForeground();
       if (!notification.foreground) {
         DeviceEventEmitter.addListener('answerCall', navigation => {
-          navigation.navigate('Meeting');
+          NavigationService.navigate('Meeting', {
+            room: dataRaw.room,
+            roomName: dataRaw.roomName,
+          });
         });
       } else {
-        NavigationService.navigate('Meeting');
+        NavigationService.navigate('Meeting', {
+          room: dataRaw.room,
+          roomName: dataRaw.roomName,
+        });
       }
     });
-
-    CallKeep.displayIncomingCall('Quocs_123', 'Quocs_123');
+    CallKeep.displayIncomingCall(dataRaw?.groupName, dataRaw?.groupName);
   },
 
   // IOS ONLY (optional): default: all - Permissions to register.
@@ -85,7 +82,6 @@ AppRegistry.registerHeadlessTask(
   () =>
     ({name, callUUID, handle}) => {
       // Make your call here
-      console.log('ahsjhdajsaaaaaaaaa');
       return Promise.resolve();
     },
 );

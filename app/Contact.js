@@ -9,20 +9,13 @@ import NavigationService from './NavigationService';
 const Contact = () => {
   const [listData, setListData] = useState([]);
   const db = firestore();
-  const navigation = useNavigation();
 
   useEffect(() => {
-    const usersCollection = firestore()
+    firestore()
       .collection('contact')
       .get()
       .then(res => {
-        // console.log('reres', res.docs);
-
-        // res.docs.forEach(doc => {
-        //   // doc.data() is never undefined for query doc snapshots
-        //   console.log(doc.id, ' => ', doc.data());
         setListData(res.docs);
-        // });
       });
   }, [db]);
 
@@ -37,7 +30,11 @@ const Contact = () => {
           <TouchableOpacity
             key={index}
             onPress={() =>
-              NavigationService.navigate('Meeting', {room: el.data()?.roomName})
+              NavigationService.navigate('Meeting', {
+                room: el.data()?.room,
+                roomName: el.data()?.roomName,
+                token: el.data()?.tokenNotifications,
+              })
             }
             activeOpacity={0.6}
             style={{
